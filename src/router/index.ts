@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Main from '@/views/Main.vue'
+import { authMiddleware, noAuthMiddleware } from '@/tools/security'
 
 Vue.use(VueRouter)
 
@@ -15,12 +16,14 @@ const routes: Array<RouteConfig> = [
     path: '/login',
     name: 'login',
     component: () => import('@/views/Login.vue').then(c => c.default),
+    beforeEnter: authMiddleware,
     meta: { layout: 'authLayout' }
   },
   {
     path: '/register',
     name: 'register',
     component: () => import('@/views/Register.vue').then(c => c.default),
+    beforeEnter: authMiddleware,
     meta: { layout: 'authLayout' }
   },
 
@@ -28,6 +31,7 @@ const routes: Array<RouteConfig> = [
     path: '/admin',
     name: 'admin',
     component: () => import('@/views/Default.vue').then(c => c.default),
+    beforeEnter: noAuthMiddleware,
     children: [
       {
         path: 'history',

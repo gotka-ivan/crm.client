@@ -1,3 +1,5 @@
+import { IUserProfile } from './User'
+
 export class LoginRequest implements ILoginRequest {
   constructor() {
     this.email = ''
@@ -15,10 +17,4 @@ export interface ILoginRequest {
 export interface ILoginResponse {
   user: IUserProfile
   token: string
-}
-
-interface IUserProfile {
-  name: string
-  email: string
-  password?: string
 }

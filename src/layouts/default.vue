@@ -8,7 +8,7 @@
       <li class="bold active"><a href="#" class="waves-effect waves-orange">История</a></li>
       <li class="bold"><a href="#" class="waves-effect waves-orange">Добавить заказ</a></li>
       <li class="bold "><a href="#" class="waves-effect waves-orange">Ассортимент</a></li>
-      <li class="bold last"><a href="#" class="waves-effect waves-orange">Выйти</a></li>
+      <li class="bold last"><a class="waves-effect waves-orange" @click="logout">Выйти</a></li>
     </ul>
     <!--CONTENT-->
     <main class="content">
@@ -60,3 +60,18 @@
     </div>
   </div>
 </template>
+<script lang="ts">
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
+import { auth } from '@/store/modules/auth/index'
+
+@Component
+class DefaultLayout extends Vue {
+  auth = auth.context(this.$store)
+
+  logout(): void {
+    this.auth.actions.logout().then(() => this.$router.push({ name: 'login' }))
+  }
+}
+export default DefaultLayout
+</script>

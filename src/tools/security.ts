@@ -1,17 +1,20 @@
-import Cookies from 'js-cookie'
-
-export const setToken = (token: string): void => {
-  Cookies.set('token', token, { expires: 1 })
-}
-
-export const getToken = (): string => {
-  return Cookies.get('token')
-}
-
-export const removeToken = (): void => {
-  Cookies.remove('token')
-}
+import { getToken } from './token'
+import router from '@/router/index'
+import { NavigationGuardNext, Route } from 'vue-router'
+import { mock } from './mock'
 
 export const isAuth = (): boolean => {
-  return !!Cookies.get('token')
+  return !!getToken()
+}
+
+export const authMiddleware = (to: Route, from: Route, next: NavigationGuardNext) => {
+  mock({ to, from })
+  if (isAuth()) router.replace({ name: 'history' })
+  next()
+}
+
+export const noAuthMiddleware = (to: Route, from: Route, next: NavigationGuardNext) => {
+  mock({ to, from })
+  if (!isAuth()) router.replace({ name: 'login' })
+  next()
 }
