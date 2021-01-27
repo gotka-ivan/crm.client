@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const path = require('path')
 
 const isDev = process.env.NODE_ENV !== 'production'
@@ -9,11 +10,11 @@ const config = {
     port: 7777,
     proxy: {
       '/api': {
-        target: 'http://localhost:8000/'
+        target: process.env.API_HOST
       },
       '/userapi': {
-        target: 'http://localhost:8000/',
-        pathRewrite: { '^/userapi': '/api' }
+        target: process.env.API_HOST,
+        pathRewrite: { '^/userapi': process.env.API_PATH }
       }
     },
     compress: true,
@@ -28,6 +29,14 @@ const config = {
 
   configureWebpack: {
     devtool: 'source-map',
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env': {
+          API_URL: JSON.stringify(process.env.API_URL),
+          API_HOST: JSON.stringify(process.env.API_HOST)
+        }
+      })
+    ],
     output: {
       filename: isDev ? '[name].[hash:8].js' : '[name].[contenthash:8].js',
       chunkFilename: isDev ? '[name].js' : '[name].[contenthash:8].js'
@@ -39,6 +48,24 @@ const config = {
         assets: path.resolve(__dirname, 'src/assets')
       }
     }
+  },
+  chainWebpack: config => {
+    config.module
+      .rule('images')
+      .use('url-loader')
+      .tap(options => {
+        options.publicPath = process.env.PUBLIC_PATH
+        options.limit = 5000
+        return options
+      })
+
+    config.module
+      .rule('svg')
+      .use('file-loader')
+      .tap(options => {
+        options.publicPath = process.env.PUBLIC_PATH
+        return options
+      })
   }
 }
 

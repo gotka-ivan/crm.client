@@ -2,7 +2,6 @@ module.exports = {
   ignorePatterns: ['node_modules/**', 'src/assets/**', 'public/**', 'dist/**'],
   root: true,
   env: {
-    browser: true,
     node: true
   },
 
@@ -10,8 +9,8 @@ module.exports = {
     'plugin:vue/recommended',
     'eslint:recommended',
     '@vue/prettier',
-    'plugin:import/errors',
-    'plugin:import/warnings'
+    '@vue/typescript/recommended',
+    '@vue/prettier/@typescript-eslint'
   ],
 
   parserOptions: {
@@ -20,13 +19,9 @@ module.exports = {
   },
 
   rules: {
-    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'no-debugger': 'off',
-    'space-before-function-paren': 'off',
-    'no-console': 'off',
-    'vue/no-v-html': 'off',
-    'import/no-unresolved': 'off',
-    'eslint-disable-next-line': 'off'
+    'no-console': 'off'
   },
 
   globals: {},
