@@ -24,7 +24,7 @@ yarn generate:api
 
 ### Необходимо сделать (TODO:)
 
-1.  Доработать swagger чтобы автоматически добавлялся токен в header запроса
+1. Автоматическое добавление токена в header запроса
 
 #### [Рекомендации](https://ru.vuejs.org/v2/style-guide/index.html)
 
