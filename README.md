@@ -1,24 +1,32 @@
-# client
+# crm.client
 
-## Project setup
-```
-npm install
-```
+### Установка
 
-### Compiles and hot-reloads for development
-```
-npm run serve
+Установка зависимостей
+
+```sh
+yarn install
 ```
 
-### Compiles and minifies for production
-```
-npm run build
+### Разработка
+
+Запуск сервера в режиме разработки:
+
+```sh
+yarn serve
 ```
 
-### Lints and fixes files
-```
-npm run lint
+Генерация API из локального сервера NodeJs
+
+```sh
+yarn generate:api
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Необходимо сделать (TODO:)
+
+1.  Доработать swagger чтобы автоматически добавлялся токен в header запроса
+
+#### [Рекомендации](https://ru.vuejs.org/v2/style-guide/index.html)
+
+- Работать только со сборщиком Yarn
+- Придерживаться стиля именования компонент
