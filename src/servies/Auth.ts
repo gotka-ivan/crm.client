@@ -1,13 +1,17 @@
-import { LoginRequest, ILoginResponse } from '@/models/Login'
-import { RegisterRequest, IRegisterResponse } from '@/models/Register'
-import { getData } from '@/tools/fetch'
+import {
+  LoginResponseDto,
+  RegisterResponseDto,
+  RegisterRequestDto,
+  LoginRequestDto,
+  AuthService as GeneratedAuthService
+} from '@/api'
 
 export class AuthService {
-  public static async login(request: LoginRequest): Promise<ILoginResponse> {
-    return getData('/api/auth/login', 'post', request)
+  public static async login(request: LoginRequestDto): Promise<LoginResponseDto> {
+    return GeneratedAuthService.authControllerLogin(request)
   }
 
-  public static async register(request: RegisterRequest): Promise<IRegisterResponse> {
-    return getData('/api/auth/register', 'post', request)
+  public static async register(request: RegisterRequestDto): Promise<RegisterResponseDto> {
+    return GeneratedAuthService.authControllerRegister(request)
   }
 }

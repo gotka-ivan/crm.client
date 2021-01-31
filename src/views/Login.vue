@@ -58,12 +58,13 @@ class LoginTemplate extends Vue {
     }
   }
 
-  login(): void {
+  async login(): Promise<void> {
     if (this.$v.$invalid) {
       this.$v.$touch()
       return
     }
-    this.auth.actions.login(this.form).then(() => this.$router.push({ name: 'history' }))
+    const response = await this.auth.actions.login(this.form)
+    if (response.access_token) this.$router.push({ name: 'history' })
   }
 }
 export default LoginTemplate

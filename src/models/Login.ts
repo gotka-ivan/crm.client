@@ -1,20 +1,10 @@
-import { IUserProfile } from './User'
+import { LoginRequestDto } from '@/api'
 
-export class LoginRequest implements ILoginRequest {
+export class LoginRequest implements LoginRequestDto {
   constructor() {
     this.email = ''
     this.password = ''
   }
   email: string
   password: string
-}
-
-export interface ILoginRequest {
-  email: string
-  password: string
-}
-
-export interface ILoginResponse {
-  user: IUserProfile
-  token: string
 }

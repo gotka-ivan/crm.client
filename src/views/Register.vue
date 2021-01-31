@@ -78,7 +78,7 @@ import { RegisterRequest } from '@/models/Register'
 class RegisterTemplate extends Vue {
   auth = auth.context(this.$store)
   form: RegisterRequest = new RegisterRequest()
-  repeatPassword: string = ''
+  repeatPassword = ''
   @Validations()
   validations = {
     form: {
@@ -94,12 +94,16 @@ class RegisterTemplate extends Vue {
     }
   }
 
-  register(): void {
+  async register(): Promise<void> {
     if (this.$v.$invalid) {
       this.$v.$touch()
       return
     }
-    this.auth.actions.register(this.form).then(() => this.$router.push({ name: 'history' }))
+    const response = await this.auth.actions.register(this.form)
+    console.log(response)
+    if (response.access_token) {
+      this.$router.push({ name: 'history' })
+    }
   }
 }
 export default RegisterTemplate

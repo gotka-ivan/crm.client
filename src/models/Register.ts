@@ -1,6 +1,6 @@
-import { IUserProfile } from './User'
+import { RegisterRequestDto } from '@/api'
 
-export class RegisterRequest implements IRegisterRequest {
+export class RegisterRequest implements RegisterRequestDto {
   constructor() {
     this.name = ''
     this.email = ''
@@ -9,15 +9,4 @@ export class RegisterRequest implements IRegisterRequest {
   name: string
   email: string
   password: string
-}
-
-export interface IRegisterRequest {
-  name: string
-  email: string
-  password: string
-}
-
-export interface IRegisterResponse {
-  user: IUserProfile
-  token: string
 }

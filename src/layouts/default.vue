@@ -45,7 +45,7 @@
     </div>
 
     <!--Floating button-->
-    <div class="fixed-action-btn">
+    <div class="fixed-action-btn" @click="getUser">
       <a class="btn-floating btn-large red">
         <i class="large material-icons">add</i>
       </a>
@@ -68,7 +68,9 @@ import { auth } from '@/store/modules/auth/index'
 @Component
 class DefaultLayout extends Vue {
   auth = auth.context(this.$store)
-
+  getUser(): void {
+    this.auth.actions.getProfile().then(response => console.log(response))
+  }
   logout(): void {
     this.auth.actions.logout().then(() => this.$router.push({ name: 'login' }))
   }

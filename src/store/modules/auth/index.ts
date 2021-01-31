@@ -1,33 +1,40 @@
-import { LoginRequest } from '@/models/Login'
+import { LoginRequestDto, LoginResponseDto, UserResponseDto } from '@/api'
 import { RegisterRequest } from '@/models/Register'
-import { IUserProfile } from '@/models/User'
 import { AuthService } from '@/servies/Auth'
+import { UsersService } from '@/servies/User'
 import { removeToken, setToken } from '@/tools/token'
 import { Getters, Mutations, Actions, Module } from 'vuex-smart-module'
 
 class AuthState {
-  profile: IUserProfile
+  profile: UserResponseDto
 }
 
 class AuthGetters extends Getters<AuthState> {}
 
 class AuthMutations extends Mutations<AuthState> {
-  setUserProfile(profile: IUserProfile) {
+  setUserProfile(profile: UserResponseDto) {
     this.state.profile = profile
   }
 }
 
 class AuthActions extends Actions<AuthState, AuthGetters, AuthMutations, AuthActions> {
-  async login(loginRequest: LoginRequest) {
+  async login(loginRequest: LoginRequestDto): Promise<LoginResponseDto> {
     const response = await AuthService.login(loginRequest)
-    setToken(response.token)
-    this.commit('setUserProfile', response.user)
+    setToken(response.access_token)
+    return response
   }
 
   async register(registerRequest: RegisterRequest) {
     const response = await AuthService.register(registerRequest)
-    setToken(response.token)
+    setToken(response.access_token)
     this.commit('setUserProfile', response.user)
+    return response
+  }
+
+  async getProfile() {
+    const user = await UsersService.getProfile()
+    this.commit('setUserProfile', user)
+    return user
   }
 
   logout() {
