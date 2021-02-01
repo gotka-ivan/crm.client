@@ -8,9 +8,13 @@ import 'material-design-icons/iconfont/material-icons.css'
 import 'materialize-css/dist/js/materialize.js'
 
 import Vuelidate from 'vuelidate'
+import { setOpenApiToken } from './tools/token'
+import { isAuth } from './tools/security'
 Vue.use(Vuelidate)
 
 Vue.config.productionTip = false
+
+if (isAuth) setOpenApiToken()
 
 new Vue({
   router,
